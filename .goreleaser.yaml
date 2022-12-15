@@ -1,0 +1,47 @@
+builds:
+  - id: jx
+    binary: jx
+    main: .
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - "386"
+      - amd64
+      - arm64
+    goarm:
+      - "7"
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+brews:
+  - tap:
+      owner: c-fraser
+      name: homebrew-tap
+    folder: Formula
+    goarm: "7"
+    homepage: https://github.com/c-fraser/jx
+    description: Easily install, upgrade, and run JVM applications
+    license: Apache-2.0
+    test: |
+      system "#{bin}/jx -v"
+    dependencies:
+      - name: openjdk
+        type: optional
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
