@@ -31,9 +31,6 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// The version of jx.
-const version = "0.1.0"
-
 // main is the entry point into the jx application.
 func main() {
 	executable("java")
@@ -42,7 +39,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "jx"
 	app.Usage = "JVM application executor"
-	app.Version = version
+	app.Version = "0.1.0"
 	app.Commands = cli.Commands{
 		&cli.Command{
 			Name:  "install",

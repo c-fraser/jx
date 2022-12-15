@@ -1,4 +1,4 @@
-VERSION := $(shell grep 'version' main.go | awk '{ print $$4 }' | tr -d '"')
+VERSION := $(shell grep 'app.Version' main.go | cut -d '"' -f2)
 FILES ?= $(shell find . -type f -name '*.go' ! -path "./vendor/*")
 
 .PHONY: help test version clean vendor vet format build release
