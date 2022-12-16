@@ -39,62 +39,56 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "jx"
 	app.Usage = "JVM application executor"
-	app.Version = "0.1.0"
+	app.Version = "0.2.0"
 	app.Commands = cli.Commands{
 		&cli.Command{
 			Name:  "install",
 			Usage: "Install a JVM application",
-			Subcommands: cli.Commands{
-				&cli.Command{
-					Name:  "gradle",
-					Usage: "Install a JVM application built with Gradle",
-					Flags: []cli.Flag{
-						&cli.StringFlag{
-							Name:     "git",
-							Usage:    "The `URL` of the project's git repository",
-							Required: true,
-						},
-						&cli.StringFlag{
-							Name:        "name",
-							Usage:       "The `NAME` of the project",
-							DefaultText: "the name of the project's git repository",
-							Required:    false,
-						},
-						&cli.StringFlag{
-							Name:        "build",
-							Usage:       "The build `COMMAND` for the project",
-							DefaultText: "gradlew installDist",
-							Required:    false,
-						},
-						&cli.StringFlag{
-							Name:        "execute",
-							Usage:       "The `COMMAND` to execute the project",
-							DefaultText: "build/install/$project/bin/$name $args",
-							Required:    false,
-						},
-					},
-					Action: func(ctx *cli.Context) error {
-						url := ctx.String("git")
-						name := ctx.String("name")
-						base := path.Base(url)
-						directory := filepath.Join(
-							filepath.Dir(conf.File),
-							base[:len(base)-len(filepath.Ext(base))],
-						)
-						if name == "" {
-							name = path.Base(directory)
-						}
-						build := ctx.String("build")
-						command := ctx.String("execute")
-						return display(
-							"Installing...",
-							fmt.Sprintf("🚀 Installed %s!", name),
-							func() error {
-								return install(&conf, url, directory, name, build, command)
-							},
-						)
-					},
+			Flags: []cli.Flag{
+				&cli.StringFlag{
+					Name:     "git",
+					Usage:    "The `URL` of the project's git repository",
+					Required: true,
 				},
+				&cli.StringFlag{
+					Name:        "name",
+					Usage:       "The `NAME` of the project",
+					DefaultText: "the name of the project's git repository",
+					Required:    false,
+				},
+				&cli.StringFlag{
+					Name:        "build",
+					Usage:       "The `COMMAND` to build the project",
+					DefaultText: "./gradlew installDist",
+					Required:    false,
+				},
+				&cli.StringFlag{
+					Name:        "execute",
+					Usage:       "The `COMMAND` to execute the project",
+					DefaultText: "./build/install/$project/bin/$name $args",
+					Required:    false,
+				},
+			},
+			Action: func(ctx *cli.Context) error {
+				url := ctx.String("git")
+				name := ctx.String("name")
+				base := path.Base(url)
+				directory := filepath.Join(
+					filepath.Dir(conf.File),
+					base[:len(base)-len(filepath.Ext(base))],
+				)
+				if name == "" {
+					name = path.Base(directory)
+				}
+				build := ctx.String("build")
+				command := ctx.String("execute")
+				return display(
+					"Installing...",
+					fmt.Sprintf("🚀 Installed %s!", name),
+					func() error {
+						return install(&conf, url, directory, name, build, command)
+					},
+				)
 			},
 		},
 		&cli.Command{

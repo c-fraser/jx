@@ -1,6 +1,7 @@
 # jx
 
 [![Release](https://img.shields.io/github/v/release/c-fraser/jx?logo=github&sort=semver)](https://github.com/c-fraser/jx/releases)
+[![GoDoc](https://godoc.org/github.com/c-fraser/jx?status.svg)](https://godoc.org/github.com/c-fraser/jx)
 [![Go Report Card](https://goreportcard.com/badge/github.com/c-fraser/jx)](https://goreportcard.com/report/github.com/c-fraser/jx)
 [![Apache License 2.0](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
@@ -27,13 +28,11 @@ Download a `jx` binary from a [release](https://github.com/c-fraser/jx/releases)
 
 ## Usage
 
-### Install a [Gradle](https://gradle.org/) project
+### Install a project
 
 ```shell
-jx install gradle --git git@github.com:c-fraser/echo.git
+jx install --git git@github.com:c-fraser/echo.git
 ```
-
-> If the project name is not specified then the repository name is used. 
 
 ### Run an installed project
 

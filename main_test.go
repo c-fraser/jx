@@ -40,7 +40,6 @@ func TestCLI(t *testing.T) {
 	if _, code := jx(
 		t,
 		"install",
-		"gradle",
 		"--git",
 		repository,
 		"--name",
